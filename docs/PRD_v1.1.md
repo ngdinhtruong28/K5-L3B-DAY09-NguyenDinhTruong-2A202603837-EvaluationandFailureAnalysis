@@ -44,7 +44,7 @@ Các trường hợp ngoài phạm vi phải được chuyển sang quy trình x
 | Evaluation set | `data/eval/eval_set_v1.jsonl` |
 | Labels | `data/eval/labels_v1.json` |
 | Eval set version | v1 |
-| Eval set SHA | `d1f103be666e` |
+| Eval set SHA | `30bd9472a904` |
 | Dataset size | 14 items × 5 seeds |
 | Total trajectories | 70 |
 | Metric specification | `config/metric_spec.yaml`, version 1.0 |
@@ -57,9 +57,9 @@ Các trường hợp ngoài phạm vi phải được chuyển sang quy trình x
 ## 3. Định nghĩa "chạy đúng" (trích metric_spec, điền giá trị thật)
 ### 3.1. Metric và ngưỡng chấp nhận
 Baseline được lấy từ report:
-- Run ID: `E-swarm-20261118-d1f1`
+- Run ID: `E-swarm-20261118-30bd`
 - Shape: `swarm`
-- Eval set SHA: `d1f103be666e`
+- Eval set SHA: `30bd9472a904`
 - Report: `reports/baseline_v1.json`
 | Metric | Loại | Ngưỡng | Chặn release? | Baseline |
 |---|---|---|---|---:|
@@ -185,7 +185,7 @@ Mọi waiver phải được ghi trong PR, bao gồm:
 Không sử dụng waiver để bỏ qua lỗi an toàn nghiêm trọng mà không có biện pháp kiểm soát thay thế.
 ### 5.6. Kết quả gate đã xác nhận
 **Fixed implementation**
-Run ID: `E-fixed-20261118-d1f1`
+Run ID: `E-fixed-20261118-30bd`
 Report: `reports/eval_fixed.json`
 Kết quả:
 ```text
@@ -193,7 +193,7 @@ exit 0 — merge
 ```
 Tất cả blocking metrics đều đạt yêu cầu.
 **Seeded regression**
-Run ID: `E-seeded_regression-20261118-d1f1`
+Run ID: `E-seeded_regression-20261118-30bd`
 Report: `reports/eval_seeded_regression.json`
 Kết quả:
 ```text
@@ -215,9 +215,9 @@ Kết luận: Gate đã phát hiện và chặn phiên bản seeded regression.
 | R-06 | Chưa có bằng chứng về automated regression test riêng cho C-002@11 | Trung bình | **Đã xử lý:** trace case `C-002@11` + `test_override_event_breaks_db_fact`; item E-002 fail trên `seeded_regression`, pass trên `fixed` |
 | R-07 | Chưa xác định tên cá nhân chịu trách nhiệm giữ gate và phê duyệt waiver | Trung bình | **Đã xác định:** Nguyễn Đình Trường (2A202603837) — Evaluation Owner |
 ### 6.1. Bằng chứng đã có
-- Baseline evaluation: `E-swarm-20261118-d1f1`.
-- Fixed evaluation: `E-fixed-20261118-d1f1`.
-- Seeded regression evaluation: `E-seeded_regression-20261118-d1f1`.
+- Baseline evaluation: `E-swarm-20261118-30bd`.
+- Fixed evaluation: `E-fixed-20261118-30bd`.
+- Seeded regression evaluation: `E-seeded_regression-20261118-30bd`.
 - Fixed gate: PASS.
 - Seeded regression gate: BLOCK.
 - Tone Judge calibration: PASS.

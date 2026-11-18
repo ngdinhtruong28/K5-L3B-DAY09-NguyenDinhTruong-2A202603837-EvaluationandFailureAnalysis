@@ -1,0 +1,2 @@
+# Keep eval JSONL byte-identical across Windows/Linux so `evalset.sha12` matches CI.
+*.jsonl text eol=lf

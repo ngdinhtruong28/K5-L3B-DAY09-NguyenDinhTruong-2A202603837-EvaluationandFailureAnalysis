@@ -3,10 +3,10 @@
 Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10. Mọi số dưới đây lấy từ report do
 script sinh (không sửa tay) và từ output terminal ngày 18/11/2026.
 
-- **Run ID / eval set SHA:** `E-swarm-20261118-d1f1` (baseline) · `E-fixed-20261118-d1f1` (PR) ·
-  `E-seeded_regression-20261118-d1f1` (đối chứng âm) / eval set `d1f103be666e`
+- **Run ID / eval set SHA:** `E-swarm-20261118-30bd` (baseline) · `E-fixed-20261118-30bd` (PR) ·
+  `E-seeded_regression-20261118-30bd` (đối chứng âm) / eval set `30bd9472a904`
 - **Phiên bản:** code commit `30c7cbe` + working tree (`metric_spec`, `harness_map`, docs) · eval set v1
-  (sha `d1f103be666e`) · metric_spec `1.0` (đã bổ sung metric FM-08) ·
+  (sha `30bd9472a904`) · metric_spec `1.0` (đã bổ sung metric FM-08) ·
   grader `lab9.graders` · seeds 11/22/33/44/55 · Python 3.13.3
 - **Eval set:** v1, 14 item × 5 seed = **70 case**, nguồn `lab8_public`; nhãn tách riêng
   `data/eval/labels_v1.json`; phủ FM-01…FM-09; `python -m lab9.evalset --check` = **0 problem(s)**
@@ -30,7 +30,7 @@ bootstrap của Δ (PR − baseline) nằm hoàn toàn dưới 0.
 
 ## Kết quả baseline vs PR
 
-Baseline: `reports/baseline_v1.json` (`E-swarm-20261118-d1f1`, 69/70 case pass).
+Baseline: `reports/baseline_v1.json` (`E-swarm-20261118-30bd`, 69/70 case pass).
 PR `fixed`: `reports/eval_fixed.json` (70/70 case pass). Đối chứng âm `seeded_regression`:
 `reports/eval_seeded_regression.json` (50/70 case pass).
 
@@ -74,7 +74,7 @@ PR `fixed`: `reports/eval_fixed.json` (70/70 case pass). Đối chứng âm `see
 ## Trace case
 
 - Link: `docs/trace_case.md`; trial `seeded_regression C-002@11` (run
-  `E-seeded_regression-20261118-d1f1`).
+  `E-seeded_regression-20261118-30bd`).
 - Triệu chứng: lab8 grader FAIL (`status resolved != denied`); ledger ghi `refund_vnd=20000`,
   `refund_count=1` nhưng nhãn là `refund_vnd=0`, `refund_count=0`.
 - **Bước sai đầu tiên:** event **#3 `model_override`** — agent lấy `delay_days=5` từ ticket để
