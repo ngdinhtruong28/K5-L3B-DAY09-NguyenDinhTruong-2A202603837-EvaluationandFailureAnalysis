@@ -5,7 +5,7 @@ script sinh (không sửa tay) và từ output terminal ngày 18/11/2026.
 
 - **Run ID / eval set SHA:** `E-swarm-20261118-30bd` (baseline) · `E-fixed-20261118-30bd` (PR) ·
   `E-seeded_regression-20261118-30bd` (đối chứng âm) / eval set `30bd9472a904`
-- **Phiên bản:** code commit `30c7cbe` + working tree (`metric_spec`, `harness_map`, docs) · eval set v1
+- **Phiên bản:** code commit `fe93cce` + M5–M7 trên nhánh `starter/d09-advanced` · eval set v1
   (sha `30bd9472a904`) · metric_spec `1.0` (đã bổ sung metric FM-08) ·
   grader `lab9.graders` · seeds 11/22/33/44/55 · Python 3.13.3
 - **Eval set:** v1, 14 item × 5 seed = **70 case**, nguồn `lab8_public`; nhãn tách riêng
@@ -100,6 +100,26 @@ PR `fixed`: `reports/eval_fixed.json` (70/70 case pass). Đối chứng âm `see
   - `reply_matches_ledger` (FM-08) chỉ bắt số tiền có hậu tố `đ`/`VND` trong event `reply`; số viết
     bằng chữ hoặc không kèm đơn vị chưa được chấm → có thể bỏ sót.
   - Report đã commit bằng `git add -f`; nếu regenerate phải commit lại để run ID/sha khớp CI.
+
+## Eval set v2 — M5–M7
+
+- **Run ID:** `E-swarm-20261118-0759` · eval set v2 SHA `0759d8bade50` · **28 item**
+  (14 v1 + 14 adversarial) × 5 seed = **140 case**.
+- `python -m lab9.evalset --v2` → **0 problem(s)**; mỗi FM bị tấn công có ≥3 item.
+- **Baseline v2:** `approval_bypass=0`, `secret_leak=0`, `reply_matches_ledger=0`,
+  `db_fact_kept=0.9786`, `refund_amount_correct=0.9786`, `pass_rate=0.9786`,
+  `pass_5=0.8929`, `pass_at_5=1.0`, `pass_hat_5=0.8929`, `cost_per_success=50.8077`.
+- **Ngưỡng M6/M5:** `pass_hat_5` blocking, floor **0.85**; slices blocking + `no_significant_drop`:
+  `money_movement` ≥ 0.90, `adversarial` ≥ 0.85, `denial` ≥ 0.90.
+- **A/A** (seeds 66/77/88/99/110 so với 11/22/33/44/55): Δ = 0 trên mọi metric với MockLLM.
+  Với LLM thật phải chạy lại A/A và đặt floor ngoài dải nhiễu thực tế.
+- **Mutation scorecard:** `fixed` merge, `honest_refactor` merge, `seeded_regression` block,
+  `slice_regression` block chỉ bởi `slice:money_movement/pass_rate`, `flaky_regression` block bởi
+  `pass_hat_5` (kèm `pass_rate`/`slice:money_movement`) → **3/3 regression bị chặn, 0 false alarm**.
+- **Traps M7:** `evaluator_errors_as_nan`, `dropped_failing_rows`, `cherry_picked_seeds`,
+  `loosened_spec` đều bị chặn; `lab9.traps` → **exit 0**.
+- **Giới hạn:** bug chỉ xuất hiện 1/3 seed không phát hiện ổn định với 5 seed; A/A = 0 trên
+  MockLLM không đại diện cho nhiễu của model thật.
 
 ## Khi nào tăng eval-set version
 
