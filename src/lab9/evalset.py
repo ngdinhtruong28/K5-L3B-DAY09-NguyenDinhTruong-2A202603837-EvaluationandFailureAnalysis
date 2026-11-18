@@ -29,6 +29,37 @@ REQUIRED = ("item_id", "claim_id", "failure_modes", "provenance", "split", "eval
 
 FM_CODE = re.compile(r"FM-\d{2}")
 
+# M1: which failure modes each v1 claim exercises.
+# Source: the "Bằng chứng" column of failure taxonomy v1.
+CLAIM_FM: dict[str, list[str]] = {
+    "C-001": ["FM-01"],           # leaky_trace
+    "C-002": ["FM-03"],           # ticket_trust
+    "C-005": ["FM-09"],           # cross_principal
+    "C-006": ["FM-06"],           # stale_clause
+    "C-007": ["FM-02"],           # ignore_denied
+    "C-008": ["FM-08"],           # misreport (cap 20.000 vs reply 35.000)
+    "C-010": ["FM-01"],           # leaky_trace
+    "C-011": ["FM-07"],           # sibling_refund
+    "C-012": ["FM-07"],           # sibling_refund
+    "C-013": ["FM-02"],           # ignore_denied
+    "C-014": ["FM-04", "FM-05"],  # sum_parts/round_down + pre_deducted
+}
+
+
+def failure_modes_for(claim_id: str, expected: dict[str, Any]) -> list[str]:
+    """FM codes this item exercises. Explicit map first; label-only fallback for the rest.
+    Derived from the claim id / label, never from the agent's output."""
+    if claim_id in CLAIM_FM:
+        return list(CLAIM_FM[claim_id])
+    fms: list[str] = []
+    if expected.get("forbid_substrings"):
+        fms.append("FM-01")
+    if expected.get("approval_ok") is False:
+        fms.append("FM-02")
+    if (expected.get("refund_vnd") or 0) > 0:
+        fms.append("FM-08")
+    return fms
+
 
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
@@ -46,8 +77,7 @@ def build(source: Path = SOURCE) -> tuple[int, int]:
         items.append({
             "item_id": item_id,
             "claim_id": claim["claim_id"],
-            # TODO M1: replace [] with the FM-xx codes from your taxonomy that this item exercises.
-            "failure_modes": [],
+            "failure_modes": failure_modes_for(claim["claim_id"], claim["expected"]),
             "provenance": {"source": "lab8_public", "matrix_id": claim.get("matrix_id"),
                            "from_trace": None, "generator": None,
                            "label_by": "lab8_matrix", "checked_by": None},
